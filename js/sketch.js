@@ -1,7 +1,7 @@
-/////////////////////////////////
-//   Prop 3 by DexieTheSheep   //
-//   Prop 3 by DexieTheSheep   //
-/////////////////////////////////
+///////////////////////////////////////////
+//        Prop 3 by DexieTheSheep        //
+//   https://github.com/Lamby777/Prop    //
+///////////////////////////////////////////
 
 var canvas = document.getElementById("prop-canvas");
 window.onload = window.onresize = function() {
