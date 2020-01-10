@@ -29,10 +29,8 @@ const c = canvas.getContext("2d");
 
 // On page load, plus every time the page is resized
 window.onload = window.onresize = function() {
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
-	cx = canvas.width;
-	cy = canvas.height;
+	canvas.width  = cx = window.innerWidth;
+	canvas.height = cy = window.innerHeight;
 }
 
 class Prop {
