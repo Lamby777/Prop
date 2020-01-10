@@ -6,6 +6,8 @@
 // Constants
 const DEV = true; // Shows stats 4 nerds
 const SHOW_FPS = true;
+const MAX_FPS = 60;
+const FRAMETIME = Math.floor(1000/MAX_FPS);
 
 game = {
 	ground: {
@@ -102,13 +104,19 @@ class Prop {
 function update() {
 	clear();
 	redrawSettings();
-	redrawAmbient();
+	//redrawAmbient();
 	redrawProps();
 	if (SHOW_FPS) redrawFramecount();
 }
 
+function clear() {
+	c.clearRect(0,0,cx,cy);
+}
+
 function redrawProps() {
-	for (prop of props) {}
+	for (prop of props) {
+		prop.update();
+	}
 }
 
 function redrawFramecount() {
@@ -120,9 +128,14 @@ function redrawFramecount() {
 	let delta = (performance.now() - lastFramecount)/1000;
 	lastFramecount = performance.now();
 	fps = 1/delta;
-	c.strokeColor = white;
-	c.fillColor = black;
-	c.strokeText(fps.toString(), cx-24, cy-24);
+	c.strokeColor = "white";
+	c.fillColor = "black";
+	c.fillText(fps.toString(), cx-24, cy-24);
+	c.stroke();
 }
 
 function redrawSettings() {}
+
+// USER WRITTEN CODE
+
+setInterval(update, FRAMETIME)
