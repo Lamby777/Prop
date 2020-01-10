@@ -17,11 +17,12 @@ level = {
 	friction: 0.8,
 	accel: 1.9,
 	gravity: 1,
-	maxfall: 10
+	maxfall: 10,
 }
 
 // Initialize Variables
-let lastFramecount, fps, cx, cy;
+let lastFramecount, fps, cx, cy,
+	props = [];
 
 // Canvas
 let canvas = document.getElementById("prop-canvas");
@@ -34,13 +35,19 @@ window.onload = window.onresize = function() {
 }
 
 class Prop {
-	constructor(x, y, w, h) {
-		this.x = x,
-		this.y = y,
-		this.w = w,
-		this.h = h;
+	constructor(x=0, y=0, w=16, h=16) {
+		this.x = x, this.y = y,
+		this.w = w, this.h = h,
+		this.img = null,
+		this.sheet = null,
 		props.push(this);
 	}
+	meta = {
+		enabled: false,
+		flipped: false,
+		screenWrap: false,
+		borderBypass: false,
+	};
 	touching(rect) {
 		return !(rect.x > (this.x + this.w) ||
 				(rect.x + rect.w) < this.x ||
@@ -48,7 +55,11 @@ class Prop {
 				(rect.y + rect.h) < this.y);
 	}
 	image(src) {
-		//
+		if (!src) this.img = null;
+		else {
+			this.img = new Image();
+			this.img.src = "src/" + this.color;
+		}
 	}
 	prepareUpdate() {
 		if (this.meta.physics) {
@@ -71,6 +82,19 @@ class Prop {
 			} else if (this.x <= 0) {
 				this.x = (cx - this.w) - 1;
 			}
+		}
+	}
+	update() {
+		if (this.sheet) {
+			c.drawImage(this.img,
+				(this.frame * (this.img.width / this.frames)),
+				0, (this.img.width / this.frames),
+				this.img.height,
+				this.x, this.y,
+				this.w,
+				this.h);
+		} else {
+			c.drawImage(this.img, this.x, this.y, this.w, this.h);
 		}
 	}
 }
