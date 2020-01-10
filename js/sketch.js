@@ -42,35 +42,35 @@ class Prop {
 		this.w = w,
 		this.h = h;
 	}
-	function touching(rect) {
+	touching(rect) {
 		return !(rect.x > (this.x + this.w) ||
 				(rect.x + rect.w) < this.x ||
 				rect.y > (this.y + this.h) ||
 				(rect.y + rect.h) < this.y);
 	}
-	function image(src) {
+	image(src) {
 		//
 	}
-	function prepareUpdate() {
+	prepareUpdate() {
 			if (this.meta.physics) {
 				this.y += gravity - yvel;
 			}
 			if (this.sheet) this.animate();
 			this.x += this.xvel;
 			this.y -= this.yvel;
-			if (!this.canBypassCanvasBorder) {
-				if (this.x + this.width > gameCanvas.canvas.width) {
-					this.x = gameCanvas.canvas.width - this.width;
+			if (!this.meta.borderBypass) {
+				if (this.x + this.w > cx) {
+					this.x = cx - this.w;
 				}
 				if (this.x < 0) {
 					this.x = 0;
 				}
 			}
 			if (this.meta.screenWrap) {
-				if (this.onRightEdge()) {
+				if (this.x + this.w >= cx) {
 					this.x = 1;
-				} else if (this.onLeftEdge()) {
-					this.x = (gameCanvas.canvas.width - this.width) - 1;
+				} else if (this.x <= 0) {
+					this.x = (cx - this.w) - 1;
 				}
 			}
 		}
