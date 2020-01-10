@@ -39,6 +39,7 @@ class Prop {
 		this.y = y,
 		this.w = w,
 		this.h = h;
+		props.push(this);
 	}
 	touching(rect) {
 		return !(rect.x > (this.x + this.w) ||
@@ -50,28 +51,28 @@ class Prop {
 		//
 	}
 	prepareUpdate() {
-			if (this.meta.physics) {
-				this.y += gravity - yvel;
+		if (this.meta.physics) {
+			this.y += gravity - yvel;
+		}
+		if (this.sheet) this.animate();
+		this.x += this.xvel;
+		this.y -= this.yvel;
+		if (!this.meta.borderBypass) {
+			if (this.x + this.w > cx) {
+				this.x = cx - this.w;
 			}
-			if (this.sheet) this.animate();
-			this.x += this.xvel;
-			this.y -= this.yvel;
-			if (!this.meta.borderBypass) {
-				if (this.x + this.w > cx) {
-					this.x = cx - this.w;
-				}
-				if (this.x < 0) {
-					this.x = 0;
-				}
-			}
-			if (this.meta.screenWrap) {
-				if (this.x + this.w >= cx) {
-					this.x = 1;
-				} else if (this.x <= 0) {
-					this.x = (cx - this.w) - 1;
-				}
+			if (this.x < 0) {
+				this.x = 0;
 			}
 		}
+		if (this.meta.screenWrap) {
+			if (this.x + this.w >= cx) {
+				this.x = 1;
+			} else if (this.x <= 0) {
+				this.x = (cx - this.w) - 1;
+			}
+		}
+	}
 }
 
 function update() {
