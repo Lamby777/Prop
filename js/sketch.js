@@ -102,15 +102,11 @@ class Prop {
 }
 
 function update() {
-	clear();
+	c.clearRect(0,0,cx,cy);
 	redrawSettings();
 	//redrawAmbient();
 	redrawProps();
 	if (SHOW_FPS) redrawFramecount();
-}
-
-function clear() {
-	c.clearRect(0,0,cx,cy);
 }
 
 function redrawProps() {
